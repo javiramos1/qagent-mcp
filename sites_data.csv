@@ -1,0 +1,15 @@
+domain,site,description
+AI Agent Frameworks,python.langchain.com,LangChain documentation for building applications with LLMs through composability
+AI Agent Frameworks,langchain-ai.github.io/langgraph,LangGraph documentation for building stateful multi-actor applications with LLMs
+AI Agent Frameworks,docs.crewai.com,CrewAI documentation for building AI agent crews and multi-agent systems
+AI Agent Frameworks,microsoft.github.io/autogen,AutoGen documentation for building multi-agent conversational AI systems
+AI Agent Frameworks,github.com/openai/swarm,OpenAI Swarm documentation for lightweight multi-agent orchestration
+AI Operations,docs.agentops.ai,AgentOps documentation for testing debugging and deploying AI agents and LLM apps
+AI Data Frameworks,docs.llamaindex.ai,LlamaIndex documentation for building LLM-powered agents over your data
+AI Data Frameworks,docs.haystack.deepset.ai,Haystack documentation for building production-ready LLM applications and RAG pipelines  
+AI Programming,dspy-docs.vercel.app,DSPy documentation for programming language models declaratively
+AI Development Platforms,learn.microsoft.com/semantic-kernel,Semantic Kernel documentation for building AI agents with C# Python or Java
+AI Operations,docs.wandb.ai/weave,Weights & Biases Weave documentation for LLMOps and AI application development
+AI Orchestration,docs.restack.io,Restack documentation for building reliable and accurate AI agents with workflows
+AI Assistant Platforms,docs.phidata.com,Phidata documentation for building AI assistants with memory knowledge and tools
+AI Memory Systems,docs.mem0.ai,Mem0 documentation for building personalized AI systems with memory 
