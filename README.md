@@ -239,60 +239,6 @@ gemini_lite_cost = $0.005               # 128K context with Gemini 2.0 Flash-Lit
 | Gemini 2.5 Pro | 5M tokens | $1.25/1M input | **Enterprise analysis** |
 | Traditional RAG | Variable | $0.077/query | **Legacy systems only** |
 
-### Architecture Comparison
-
-**MCP-Based Search-First Architecture (This Project):**
-```mermaid
-graph TD
-    A[User Query] --> B[FastAPI App]
-    B --> C[QA Agent]
-    C --> D[MCP Client]
-    D --> E[HTTP Transport]
-    E --> F[MCP Server]
-    F --> G[Search Tool]
-    F --> H[Scraping Tool]
-    G --> I[Tavily API]
-    H --> J[Web Scraping]
-    I --> K[Search Results]
-    J --> K
-    K --> L[LLM with Context]
-    L --> M[Response]
-    
-    style B fill:#e1f5fe
-    style F fill:#ccffcc
-    style G fill:#e8f5e8
-    style H fill:#fff3e0
-    style L fill:#cceeff
-```
-
-**Traditional RAG Architecture:**
-```mermaid
-graph TD
-    A[User Query] --> B[Embedding Model]
-    B --> C[Vector Database]
-    C --> D[Similarity Search]
-    D --> E[Chunk Retrieval]
-    E --> F[Context Assembly]
-    F --> G[LLM Processing]
-    G --> H[Response]
-    
-    I[Document Ingestion] --> J[Chunking]
-    J --> K[Embedding Generation]
-    K --> L[Vector Storage]
-    L --> C
-    
-    style C fill:#ffcccc
-    style J fill:#ffcccc
-    style K fill:#ffcccc
-```
-    K --> L[Vector Storage]
-    L --> C
-    
-    style C fill:#ffcccc
-    style J fill:#ffcccc
-    style K fill:#ffcccc
-```
-
 ### Performance Advantages
 
 Recent research (2024-2025) shows that search-first approaches often outperform RAG:
@@ -353,24 +299,43 @@ graph TD
     P[sites_data.csv] --> G
     Q[Domain Restrictions] --> I
     Q --> J
+```
+
+### Architecture Comparison
+
+**MCP-Based Search-First Architecture (This Project):**
+```mermaid
+graph TD
+    A[User Query] --> B[FastAPI App]
+    B --> C[QA Agent]
+    C --> D[MCP Client]
+    D --> E[HTTP Transport]
+    E --> F[MCP Server]
+    F --> G[Search Tool]
+    F --> H[Scraping Tool]
+    G --> I[Tavily API]
+    H --> J[Web Scraping]
+    I --> K[Search Results]
+    J --> K
+    K --> L[LLM with Context]
+    L --> M[Response]
+```
+
+**Traditional RAG Architecture:**
+```mermaid
+graph TD
+    A[User Query] --> B[Embedding Model]
+    B --> C[Vector Database]
+    C --> D[Similarity Search]
+    D --> E[Chunk Retrieval]
+    E --> F[Context Assembly]
+    F --> G[LLM Processing]
+    G --> H[Response]
     
-    style A fill:#e1f5fe
-    style B fill:#f3e5f5
-    style F fill:#ccffcc
-    style G fill:#e8f5e8
-    style H fill:#fff3e0
-    style L fill:#e0f2f1
-    style O fill:#f1f8e9
-    
-    classDef mcpLayer stroke:#9c27b0,stroke-width:3px
-    classDef searchPath stroke:#4caf50,stroke-width:3px
-    classDef scrapePath stroke:#ff9800,stroke-width:3px
-    classDef decision stroke:#2196f3,stroke-width:3px
-    
-    class D,E,F mcpLayer
-    class G,I,K,L searchPath
-    class H,J,M,N scrapePath
-    class K decision
+    I[Document Ingestion] --> J[Chunking]
+    J --> K[Embedding Generation]
+    K --> L[Vector Storage]
+    L --> C
 ```
 
 ### Core Components
@@ -740,19 +705,6 @@ make docker-logs-api # Debug FastAPI client
 - **Network Testing**: Tests real HTTP communication between services
 - **Port Management**: No need to manage multiple terminal windows
 
-3. **Test Changes**
-   ```bash
-   make test        # Run tests
-   make run         # Test locally
-   ```
-
-4. **Docker Testing**
-   ```bash
-   make docker-build
-   make docker-run
-   make docker-logs   # View logs
-   ```
-
 ### Project Structure
 
 ```
@@ -835,17 +787,6 @@ docker-compose exec qa-agent python -c "import requests; print(requests.get('htt
 make docker-stop
 make docker-rebuild
 ```
-   - Activate virtual environment: `source qagent_venv/bin/activate`
-   - Install dependencies: `make install`
-
-3. **Docker Issues**
-   - Ensure Docker is running
-   - Check port 8000 is available
-   - View logs: `make docker-logs`
-
-4. **Search Not Working**
-   - Verify domain configuration in `sites_data.csv`
-   - Check Tavily API key and quota
 
 ### Getting Help
 
