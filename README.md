@@ -1,8 +1,8 @@
-# Domain-Specific Q&A Agent: The RAG Killer?
+# Domain-Specific Q&A Agent: RAG alternative using MCP
 
 **This project showcases a simpler, more practical alternative to traditional RAG systems** - demonstrating how modern search APIs combined with large context windows can eliminate the complexity of Retrieval-Augmented Generation for many documentation Q&A use cases.
 
-This project builds on the [previous Q&A agent implementation](https://github.com/javiramos1/qagent), enhancing it with **Model Context Protocol (MCP)** architecture for better tool isolation, scalability, and maintainability. The tools now run in a separate MCP server process, providing cleaner separation of concerns and enabling distributed deployments.
+This project builds on the [previous Q&A agent implementation](https://github.com/javiramos1/qagent), enhancing it with **Model Context Protocol (MCP)** architecture for better tool isolation, scalability, and maintainability. The tools now run in a separate **MCP** server process, providing cleaner separation of concerns and enabling distributed deployments.
 
 As we enter 2025, there's growing evidence that **search-first approaches** are becoming more cost-effective and simpler than traditional RAG. With models like Gemini 2.5 Flash offering 5M token context windows at competitive prices, many developers are discovering: **"Why build complex RAG pipelines when you can just search and load relevant content into context?"**
 
@@ -658,41 +658,42 @@ make format           # Format code with black
 make lint             # Run linting checks
 ```
 
-### Development Workflow Options
+### Development Workflow
 
-#### Option 1: Local Development (Recommended for Development)
+For ongoing development after initial setup (see Quick Start section above):
+
+#### Local Development Workflow
 ```bash
-# 1. Setup Development Environment
-make install
-make dev-install  # Install development dependencies
+# Make your changes to the code
+# Then test locally:
 
-# 2. Make Changes
-# Edit code
+# Format and lint your changes
 make format      # Format code
 make lint        # Check code quality
 
-# 3. Test Changes Locally
-make mcp-test    # Test MCP server functionality
-make mcp-server  # Start MCP server (Terminal 1)
-make run         # Start FastAPI app (Terminal 2)
+# Test MCP server functionality
+make mcp-test    # Test MCP server
+
+# Run the system (2 terminals)
+make mcp-server  # Terminal 1: Start MCP server
+make run         # Terminal 2: Start FastAPI app
 ```
 
-#### Option 2: Docker Development (Recommended for Production Testing)
+#### Docker Development Workflow
 ```bash
-# 1. Setup Development Environment
-make install  # Still needed for local editing
+# Make your changes to the code
+# Then test with Docker:
 
-# 2. Make Changes
-# Edit code
+# Format and lint your changes  
 make format      # Format code
 make lint        # Check code quality
 
-# 3. Test Changes with Docker
+# Test with Docker environment
 make docker-build    # Build updated image
 make docker-run      # Start both services
 make docker-logs     # Monitor logs
 
-# Debug specific services
+# Debug specific services if needed
 make docker-logs-mcp # Debug MCP server
 make docker-logs-api # Debug FastAPI client
 ```
