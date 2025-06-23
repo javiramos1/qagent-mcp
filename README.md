@@ -17,6 +17,110 @@ This enhanced version introduces **Model Context Protocol (MCP)** architecture:
 - **📋 Standardization**: Follows Model Context Protocol specification for interoperability
 - **🐳 Production Ready**: Enhanced Docker setup with multi-service orchestration
 
+## 🌟 The Ultimate MCP Vision: Agents as Tools in Distributed Ecosystems
+
+This project demonstrates a **constrained example** of MCP's revolutionary potential. While we showcase search and scraping tools in isolation, MCP's true power lies in creating **hierarchical, self-discovering tool ecosystems** where agents themselves become tools for other agents.
+
+### 🔄 Dynamic Tool Discovery & Hierarchical Systems
+
+```mermaid
+graph TD
+    A[Client Application] --> B[Primary MCP Server]
+    
+    B --> C[Level 1: Basic Tools]
+    C --> D[search_documentation]
+    C --> E[scrape_website]
+    C --> F[file_operations]
+    
+    B --> G[Level 2: Agent Tools]
+    G --> H[data_analysis_agent]
+    G --> I[code_review_agent]
+    G --> J[research_agent]
+    
+    H --> K[MCP Server: Analytics]
+    K --> L[pandas_processor]
+    K --> M[visualization_engine]
+    K --> N[statistical_analyzer]
+    
+    I --> O[MCP Server: DevOps]
+    O --> P[github_integration]
+    O --> Q[ci_cd_tools]
+    O --> R[security_scanner]
+    
+    J --> S[MCP Server: Research]
+    S --> T[academic_search]
+    S --> U[patent_analyzer]
+    S --> V[trend_predictor]
+    
+    subgraph "Tool Registry & Discovery"
+        W[MCP Registry Service]
+        X[Tool Capability Metadata]
+        Y[Dynamic Tool Routing]
+    end
+    
+    B <--> W
+    H <--> W
+    I <--> W
+    J <--> W
+    
+    style W fill:#e1f5fe
+    style X fill:#e1f5fe
+    style Y fill:#e1f5fe
+    style H fill:#fff3e0
+    style I fill:#fff3e0
+    style J fill:#fff3e0
+```
+
+### 🚀 Beyond This Project: The Full MCP Ecosystem
+
+**What This Project Shows**: Static tool configuration with search and scraping capabilities
+
+**What MCP Enables at Scale**:
+
+#### 🔍 **Dynamic Tool Discovery**
+- **Tool Registration**: MCP servers automatically register their capabilities
+- **Capability Metadata**: Tools advertise their functions, parameters, and use cases
+- **Smart Routing**: Agents automatically discover and connect to relevant tools
+- **Load Balancing**: Multiple instances of the same tool type for redundancy
+
+#### 🏗️ **Hierarchical Tool Architecture**  
+- **Agents as Tools**: Complete AI agents exposed as single tools to other agents
+- **Nested Workflows**: Tools that orchestrate other tools to complete complex tasks
+- **Specialization Layers**: Domain-specific tool clusters (DevOps, Analytics, Research)
+- **Cross-Domain Integration**: Tools from different domains working together seamlessly
+
+#### 🌐 **Distributed MCP Networks**
+- **Multi-Organization**: Tools shared across organizational boundaries
+- **Federated Discovery**: Global registries of available MCP tools and agents
+- **Edge Computing**: Local MCP servers with global tool federation
+- **Resilient Architecture**: Automatic failover and redundancy across distributed nodes
+
+### 💡 Real-World Scenario: Enterprise MCP Ecosystem
+
+Imagine asking: *"Analyze our Q3 sales data, identify trends, create visualizations, check for security compliance, and generate an executive report"*
+
+**In Our Current Project**: You'd get search results about sales analysis techniques
+
+**In Full MCP Ecosystem**:
+1. **Discovery Phase**: Primary agent discovers specialized tools via MCP registry
+2. **Data Analysis Agent**: Automatically connects to analytics MCP server
+3. **Security Agent**: Validates data handling against compliance MCP tools  
+4. **Visualization Agent**: Generates charts using visualization MCP services
+5. **Report Agent**: Combines outputs using document generation MCP tools
+6. **Executive Agent**: Reviews and formats final report using executive summary MCP capabilities
+
+**Each "agent" is actually an MCP tool** that can be used by other agents, creating infinite composability.
+
+### 🎯 This Project's Role in the Vision
+
+**🔹 Foundation Building**: Demonstrates core MCP client-server patterns
+**🔹 Tool Isolation**: Shows how to separate tool logic from application logic  
+**🔹 HTTP Transport**: Establishes reliable communication patterns for distributed systems
+**🔹 Development Workflow**: Provides patterns for testing and debugging MCP tools
+**🔹 Production Deployment**: Docker orchestration for multi-service MCP architectures
+
+**Think of this as "MCP 101"** - the essential patterns you need before building planet-scale, self-organizing tool ecosystems.
+
 ## 🚀 Key Features
 
 - **🎯 Smart Tool Selection**: Automatically chooses between fast search and comprehensive scraping based on query needs
@@ -205,10 +309,6 @@ MAX_CONTENT_SIZE=10000          # Maximum content size per result
 MAX_SCRAPE_LENGTH=20000         # Maximum content length for web scraping (characters)
 ENABLE_SEARCH_SUMMARIZATION=false  # Enable AI summarization of search results (reduces tokens 60-80%)
 ```
-
-## 🏗️ MCP-Based System Architecture
-
-The key innovation in this version is the **Model Context Protocol (MCP)** architecture that separates tools from the main application:
 
 ## 🏗️ MCP-Based System Architecture
 
@@ -424,7 +524,6 @@ async def search_documentation(
 - **Scalable Security**: MCP server can run with different security contexts
 - **Audit Trail**: MCP protocol provides clear tool usage logging
 
-
 ## 🏢 MCP for Enterprise Deployments
 
 The MCP architecture provides additional benefits for enterprise deployments:
@@ -492,8 +591,7 @@ For ongoing development after initial setup (see Quick Start section above):
 # Then test locally:
 
 # Format and lint your changes
-make format      # Format code
-make lint        # Check code quality
+make format && make lint
 
 # Test MCP server functionality
 make mcp-test    # Test MCP server
@@ -509,12 +607,10 @@ make run         # Terminal 2: Start FastAPI app
 # Then test with Docker:
 
 # Format and lint your changes  
-make format      # Format code
-make lint        # Check code quality
+make format && make lint
 
 # Test with Docker environment
-make docker-build    # Build updated image
-make docker-run      # Start both services
+make docker-rebuild  # Build updated image and restart
 make docker-logs     # Monitor logs
 
 # Debug specific services if needed
@@ -522,13 +618,7 @@ make docker-logs-mcp # Debug MCP server
 make docker-logs-api # Debug FastAPI client
 ```
 
-### Docker Development Benefits
-
-- **Production Parity**: Exact same environment as production
-- **Easy Cleanup**: `make docker-stop` cleans everything
-- **Service Isolation**: MCP server and client run independently
-- **Network Testing**: Tests real HTTP communication between services
-- **Port Management**: No need to manage multiple terminal windows
+> **💡 Docker Benefits**: Production parity, easy cleanup, service isolation, and automated networking between MCP server and client.
 
 ### Project Structure
 
