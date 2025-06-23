@@ -63,12 +63,6 @@ graph TD
     I <--> W
     J <--> W
     
-    style W fill:#e1f5fe
-    style X fill:#e1f5fe
-    style Y fill:#e1f5fe
-    style H fill:#fff3e0
-    style I fill:#fff3e0
-    style J fill:#fff3e0
 ```
 
 ### 🚀 Beyond This Project: The Full MCP Ecosystem
