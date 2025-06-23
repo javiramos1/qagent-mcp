@@ -375,39 +375,23 @@ make mcp-test
 MCP_PORT=9000 make mcp-server
 ```
 
-## ⚡ Search Result Summarization
+## ⚡ MCP-Enhanced Search Summarization
 
-Enable intelligent search result summarization to reduce token usage and improve performance:
+This version includes the same intelligent search result summarization from the original project, now with **MCP integration**:
 
 ```bash
 # Enable summarization in your .env file
 ENABLE_SEARCH_SUMMARIZATION=true
 ```
 
-### Performance Benefits
+### MCP Integration Benefits
 
-- ✅ **60-80% token reduction** while preserving key information
-- ✅ **2-3x faster processing** with smaller contexts  
-- ✅ **Lower costs** especially for high-volume deployments
-- ✅ **Better focus** on query-relevant information
-- ✅ **Automatic fallback** if summarization fails
+- **Process Isolation**: Summarization runs within the MCP server process
+- **Resource Management**: Better resource isolation for summarization workloads
+- **Independent Scaling**: Scale summarization independently from main application
+- **Enhanced Debugging**: Use FastMCP inspector to test summarization behavior
 
-### When to Enable
-
-- **High-volume scenarios** (>1000 queries/day)
-- **Cost-sensitive deployments** requiring maximum efficiency
-- **Long documentation pages** with lots of boilerplate content
-- **Latency-critical applications** where speed matters most
-
-### Technical Details
-
-- Uses **Gemini 2.0 Flash-Lite** for ultra-fast, cheap summarization ($0.0375/1M tokens)
-- Preserves technical details, code examples, and source URLs
-- Intelligent prompt focuses on query relevance
-- Graceful degradation if summarization fails
-- **MCP Integration**: Summarization runs within the MCP server process for better resource isolation
-
-This design choice makes the system **practical for production deployment** while maintaining high answer quality through structured tool usage rather than expensive internal reasoning.
+> **📊 For detailed performance benefits and technical details**, see the [original project documentation](https://github.com/javiramos1/qagent#-search-result-summarization).
 
 ## 🔒 MCP-Enhanced Site Restrictions
 
@@ -461,17 +445,18 @@ The MCP architecture provides additional benefits for enterprise deployments:
 
 > **📋 For detailed organizational use cases** (internal documentation, customer support, compliance), see the [original project documentation](https://github.com/javiramos1/qagent#-organizational-use-cases).
 
-## 🎯 Educational Goals
+## 🎯 MCP Educational Goals
 
-This project demonstrates how organizations can:
+This project demonstrates how to enhance AI applications with **Model Context Protocol**:
 
-- ✅ **Implement AI Guardrails** - Prevent unauthorized knowledge access
-- ✅ **Create Safe AI Assistants** - Domain-restricted organizational tools
-- ✅ **Use Search-First Architecture** - Simpler alternative to RAG systems
-- ✅ **Build LangChain Agents** - Structured chat agents with tools and constraints
-- ✅ **Deploy Production AI** - FastAPI, Docker, and monitoring
-- ✅ **Manage AI Knowledge Scope** - Configuration-driven domain control
-- ✅ **Ensure Response Reliability** - Force tool usage to prevent hallucination
+- ✅ **Implement MCP Architecture** - Separate tools from main application logic
+- ✅ **Build MCP Servers** - Create FastMCP servers with custom tools
+- ✅ **Use MCP Clients** - Integrate langchain-mcp-adapters for tool communication
+- ✅ **Deploy MCP Services** - Docker orchestration for multi-service MCP architectures
+- ✅ **Debug MCP Tools** - Use FastMCP inspector for development and testing
+- ✅ **Scale MCP Systems** - Distributed deployment patterns with HTTP transport
+
+> **🎓 For broader educational goals** (AI guardrails, search-first architecture, production AI deployment), see the [original project documentation](https://github.com/javiramos1/qagent#-educational-goals).
 
 ## 🛠️ Development
 
@@ -636,23 +621,33 @@ make docker-rebuild
 
 ## 🏆 Conclusion
 
-This project showcases the **intelligent dual-tool approach** that's reshaping AI knowledge systems in 2025. By combining **fast search** with **smart scraping**, we've created a system that's:
+This project showcases how **Model Context Protocol (MCP)** enhances search-first AI systems by providing:
 
-- **Simpler than RAG**: No vector databases, embeddings, or chunking complexity
-- **Cheaper than RAG**: 15x more cost-effective with Gemini 2.0 Flash-Lite  
-- **More reliable**: Official documentation sources with complete transparency
-- **Always current**: Real-time search without stale embedding issues
-- **Production-ready**: Built-in guardrails and organizational safety controls
+### MCP Architecture Advantages
 
-### Key Competitive Advantages
+- **🔧 Tool Isolation**: Search and scraping tools run in separate, manageable processes
+- **📈 Scalability**: Independent scaling of tools vs application logic
+- **🛡️ Enhanced Security**: Process-level isolation of search restrictions
+- **🧪 Better Development**: FastMCP inspector for interactive tool testing
+- **🏗️ Production Ready**: Multi-service Docker orchestration with health checks
 
-- **Quick Search**: Instant results for 90% of queries via Tavily API
-- **Deep Scraping**: Comprehensive extraction when search isn't enough
-- **Complete Transparency**: Every answer traced to official documentation
-- **Zero Hallucination**: Forced tool usage prevents made-up responses
-- **Organizational Control**: CSV-driven knowledge boundaries
+### When to Use MCP Architecture
 
-**Perfect for**: Internal knowledge assistants, customer support bots, technical documentation systems, and any scenario requiring reliable, traceable AI responses within defined knowledge boundaries.
+**✅ Choose MCP When:**
+- Building production AI systems requiring tool isolation
+- Need to scale search/scraping tools independently  
+- Want better development and debugging experience
+- Deploying in microservices or container environments
+- Require enterprise-grade tool management
+
+**🔄 Use Original Version When:**
+- Building simple prototypes or demos
+- Single-container deployment is sufficient
+- Development speed over architecture is priority
+
+> **📚 For the complete search-first vs RAG analysis**, cost comparisons, and performance research, see the [original project](https://github.com/javiramos1/qagent).
+
+**Perfect for**: Organizations wanting to implement robust, scalable search-first AI systems with enterprise-grade tool isolation and management.
 
 ## 📄 License
 
