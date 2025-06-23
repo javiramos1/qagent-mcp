@@ -2,13 +2,20 @@
 
 **This project showcases a simpler, more practical alternative to traditional RAG systems** - demonstrating how modern search APIs combined with large context windows can eliminate the complexity of Retrieval-Augmented Generation for many documentation Q&A use cases.
 
-This project builds on the [previous Q&A agent implementation](https://github.com/javiramos1/qagent), enhancing it with **Model Context Protocol (MCP)** architecture for better tool isolation, scalability, and maintainability. The tools now run in a separate **MCP** server process, providing cleaner separation of concerns and enabling distributed deployments.
+This project builds on the [previous Q&A agent implementation](https://github.com/javiramos1/qagent), enhancing it with **Model Context Protocol (MCP)** architecture for better tool isolation, scalability, and maintainability. The tools now run in a separate MCP server process, providing cleaner separation of concerns and enabling distributed deployments.
 
-As we enter 2025, there's growing evidence that **search-first approaches** are becoming more cost-effective and simpler than traditional RAG. With models like Gemini 2.5 Flash offering 5M token context windows at competitive prices, many developers are discovering: **"Why build complex RAG pipelines when you can just search and load relevant content into context?"**
+> **📚 For detailed analysis of why search-first approaches beat RAG in 2025** (cost comparisons, performance advantages, model selection strategies), see the [original project documentation](https://github.com/javiramos1/qagent#-why-search-first-beats-rag-in-2025).
 
-This project provides a **hands-on example** of this approach - showcasing intelligent search with domain restrictions and organizational guardrails through an MCP-based architecture.
+## 🆕 What's New with MCP
 
-Perfect for organizations wanting to create internal knowledge assistants that stay within approved documentation boundaries without the overhead of traditional RAG infrastructure.
+This enhanced version introduces **Model Context Protocol (MCP)** architecture:
+
+- **🔗 Tool Isolation**: Search and scraping tools run in separate MCP server process
+- **📡 HTTP Transport**: Reliable HTTP-based communication between FastAPI app and MCP server  
+- **🏗️ Scalable Architecture**: MCP server can run on different machines for distributed deployments
+- **🛠️ Better Development**: FastMCP inspector allows interactive tool testing
+- **📋 Standardization**: Follows Model Context Protocol specification for interoperability
+- **🐳 Production Ready**: Enhanced Docker setup with multi-service orchestration
 
 ## 🚀 Key Features
 
@@ -199,78 +206,13 @@ MAX_SCRAPE_LENGTH=20000         # Maximum content length for web scraping (chara
 ENABLE_SEARCH_SUMMARIZATION=false  # Enable AI summarization of search results (reduces tokens 60-80%)
 ```
 
-## 📊 Why Search-First Beats RAG in 2025
+## 🏗️ MCP-Based System Architecture
 
-### Cost Reality Check
+The key innovation in this version is the **Model Context Protocol (MCP)** architecture that separates tools from the main application:
 
-Our analysis reveals that **search-first approaches are now cost-competitive or even cheaper** than traditional RAG systems:
+## 🏗️ MCP-Based System Architecture
 
-```python
-# Fair comparison: Same model (Gemini 2.0 Flash), same token usage
-
-# Search-First Approach (this project)
-search_cost = $0.075                    # 1M tokens input + 1K output
-# No additional infrastructure needed
-
-# Traditional RAG Approach  
-rag_llm_cost = $0.075                   # Same LLM costs as search-first
-rag_overhead = $0.002                   # Embeddings + vector DB queries
-rag_infrastructure = $0.001             # Hosting, maintenance, pipelines
-total_rag_cost = $0.078                 # 4% MORE expensive than search-first!
-
-# Ultra-affordable option
-gemini_lite_cost = $0.005               # 128K context with Gemini 2.0 Flash-Lite
-```
-
-### Key Findings
-
-- **Gemini 2.0 Flash-Lite**: $0.005 per query - **15x cheaper** than RAG
-- **Gemini 2.0 Flash**: $0.075 per query - **same cost** as RAG but no infrastructure
-- **Search-first eliminates**: Vector databases, embeddings, chunking, maintenance overhead
-- **Always fresh**: No stale embeddings or index updates needed
-
-### Latest Model Context Windows (2025)
-
-| Model | Context Window | Token Pricing | Best For |
-|-------|----------------|---------------|----------|
-| Gemini 2.0 Flash-Lite | 128K tokens | $0.0375/1M input | **Most Q&A scenarios** |
-| Gemini 2.0 Flash | 1M tokens | $0.075/1M input | **Complex documentation** |
-| Gemini 2.5 Flash Preview | 1M tokens | $0.15/1M input | **Reasoning-heavy tasks** |
-| Gemini 2.5 Pro | 5M tokens | $1.25/1M input | **Enterprise analysis** |
-| Traditional RAG | Variable | $0.077/query | **Legacy systems only** |
-
-### Performance Advantages
-
-Recent research (2024-2025) shows that search-first approaches often outperform RAG:
-
-- **No "lost in the middle" issues** - Search returns most relevant content first
-- **Better context relevance** - Search algorithms optimize for query relevance
-- **Faster iteration** - No embedding regeneration when documents change
-- **Simpler debugging** - Easy to see what content was retrieved and why
-
-### 2025 Strategy Recommendations
-
-**🥇 Primary Approach: Search-First (This Project)**
-- ✅ **Public documentation** - Use search APIs with large context windows
-- ✅ **Internal wikis** - Search across approved domains with guardrails  
-- ✅ **Cost optimization** - 15x cheaper with Gemini 2.0 Flash-Lite
-- ✅ **Simplicity** - No vector databases or embedding maintenance
-- ✅ **Always current** - Real-time search results
-
-**🥈 Fallback: Hybrid RAG-Search**
-- 🔄 **Private enterprise data** with strict access controls
-- 🔄 **Fine-grained permissions** on document chunks
-- 🔄 **Offline scenarios** where search APIs aren't available
-
-**🥉 Legacy: Traditional RAG**
-- ⚠️ **Specialized use cases** requiring complex document relationships
-- ⚠️ **Ultra-high volume** (>100K queries/day) where infrastructure costs amortize
-
-**The Verdict**: Search-first approaches have fundamentally changed the game in 2025. This project demonstrates: **Search + Large Context > RAG for most organizational knowledge systems.** 🚀
-
-## 🏗️ System Architecture
-
-The system uses a **MCP-based search-first approach** with **intelligent fallback to web scraping** for comprehensive information retrieval:
+The key innovation in this version is the **Model Context Protocol (MCP)** architecture that separates tools from the main application:
 
 ```mermaid
 graph TD
@@ -301,42 +243,13 @@ graph TD
     Q --> J
 ```
 
-### Architecture Comparison
+### MCP Architecture Benefits
 
-**MCP-Based Search-First Architecture (This Project):**
-```mermaid
-graph TD
-    A[User Query] --> B[FastAPI App]
-    B --> C[QA Agent]
-    C --> D[MCP Client]
-    D --> E[HTTP Transport]
-    E --> F[MCP Server]
-    F --> G[Search Tool]
-    F --> H[Scraping Tool]
-    G --> I[Tavily API]
-    H --> J[Web Scraping]
-    I --> K[Search Results]
-    J --> K
-    K --> L[LLM with Context]
-    L --> M[Response]
-```
-
-**Traditional RAG Architecture:**
-```mermaid
-graph TD
-    A[User Query] --> B[Embedding Model]
-    B --> C[Vector Database]
-    C --> D[Similarity Search]
-    D --> E[Chunk Retrieval]
-    E --> F[Context Assembly]
-    F --> G[LLM Processing]
-    G --> H[Response]
-    
-    I[Document Ingestion] --> J[Chunking]
-    J --> K[Embedding Generation]
-    K --> L[Vector Storage]
-    L --> C
-```
+- **Tool Isolation**: Search and scraping tools run in separate MCP server process
+- **Scalability**: MCP server can run on different machines for distributed deployments  
+- **HTTP Transport**: Reliable HTTP-based communication instead of STDIO pipes
+- **Development**: FastMCP inspector allows interactive tool testing
+- **Standardization**: Follows Model Context Protocol specification for interoperability
 
 ### Core Components
 
@@ -348,55 +261,16 @@ graph TD
 6. **Scraping Tool**: Chromium-based web scraping for comprehensive content extraction
 7. **Site Restrictions**: CSV-configured domains ensure searches stay within organizational boundaries
 
-### MCP-Based Information Retrieval
+### MCP vs Previous Architecture
 
-The system uses a **two-tier approach** with tools running in a separate MCP server process:
+**Previous Version**: Tools embedded directly in the main application
+**MCP Version**: Tools run in separate server process with HTTP communication
 
-1. **Primary: Fast Search via MCP** - Uses Tavily API through MCP server to quickly search within approved documentation websites
-2. **Fallback: Deep Scraping via MCP** - When search results are insufficient, automatically scrapes entire pages through MCP tools for comprehensive content
-
-### Agent Decision Logic with MCP
-
-The agent follows a **smart escalation strategy** using MCP tools:
-
-1. **Analyze Query**: Determine relevant documentation sites based on technologies mentioned
-2. **MCP Search First**: Call `search_documentation` tool via MCP client for fast Tavily search within selected domains
-3. **Evaluate Results**: Assess if search provides sufficient information to answer the query
-4. **MCP Scrape if Needed**: Call `scrape_website` tool via MCP client to extract complete page content when search results are incomplete
-5. **Comprehensive Response**: Combine information from both MCP tools for detailed answers
-
-### MCP Architecture Benefits
-
-- **Tool Isolation**: Search and scraping tools run in separate MCP server process
-- **Scalability**: MCP server can run on different machines for distributed deployments  
-- **HTTP Transport**: Reliable HTTP-based communication instead of STDIO pipes
-- **Development**: FastMCP inspector allows interactive tool testing
-- **Standardization**: Follows Model Context Protocol specification for interoperability
-
-### Model Selection: Gemini Flash Over "Thinking" Models
-
-This system strategically uses **Gemini 2.0 Flash** (non-thinking model) instead of reasoning-heavy models like o3:
-
-| **Aspect** | **Gemini Flash (Non-Thinking)** | **o3-style (Thinking Models)** |
-|------------|----------------------------------|--------------------------------|
-| **Cost** | $0.075/1M tokens | $15-60/1M tokens (200-800x more) |
-| **Speed** | 2-5 seconds | 15-60 seconds |
-| **Token Usage** | Minimal overhead | Heavy reasoning chains |
-| **Suitability** | Perfect for tool-based workflows | Overkill for structured tasks |
-
-**ReAct Framework Replaces Internal Reasoning:**
-```
-Human Query → Agent Thinks → Selects Tool → Executes → Observes → Responds
-     ↑              ↑            ↑           ↑         ↑         ↑
-   Input      ReAct Logic   Tool Selection  Search   Results   Answer
-```
-
-**Key Advantages:**
-1. **Cost-Effective Reasoning**: ReAct provides structured thinking at 1/200th the cost
-2. **Transparent Logic**: Every reasoning step is visible and debuggable  
-3. **Tool-Optimized**: Designed specifically for search + scraping workflows
-4. **Faster Responses**: No internal chain-of-thought overhead
-5. **Easier Boundaries**: Explicit tool constraints prevent hallucination
+This separation enables:
+- **Better Resource Management**: Tools can be scaled independently
+- **Improved Reliability**: Tool failures don't crash the main application  
+- **Enhanced Security**: Tools run in isolated environment
+- **Easier Debugging**: FastMCP inspector for tool testing
 
 ## 📡 API Reference
 
@@ -535,9 +409,9 @@ ENABLE_SEARCH_SUMMARIZATION=true
 
 This design choice makes the system **practical for production deployment** while maintaining high answer quality through structured tool usage rather than expensive internal reasoning.
 
-## 🔒 How Site Restrictions Work
+## 🔒 MCP-Enhanced Site Restrictions
 
-This project demonstrates **organizational AI safety** through multiple layers enforced via MCP tools:
+Building on the domain restrictions from the [original project](https://github.com/javiramos1/qagent#-how-site-restrictions-work), this MCP version enhances security through **tool isolation**:
 
 ### MCP-Based Domain Restrictions
 ```python
@@ -559,68 +433,33 @@ async def search_documentation(
     result = await tavily_client.search(**search_params)
 ```
 
-### Agent Enforcement via MCP
-- Agent **must** use MCP tools for every question
-- Questions outside configured knowledge sources trigger rejection responses  
-- Clear user guidance about available knowledge areas
+### Enhanced Security Benefits
+
 - **Tool Isolation**: All search restrictions enforced at MCP server level
-
-### Configuration Details
-- **Topic Domains** (CSV 'domain' column): Used for categorization and user communication
-- **Website Domains** (CSV 'site' column): Used for actual search restrictions in MCP tools
-- **MCP Protocol**: Ensures tools can only access approved domains
-
-### Benefits for Organizations
-- ✅ **No data leakage** - searches only approved documentation websites
-- ✅ **No hallucination** - responses based only on real documentation  
-- ✅ **Audit trail** - all searches are logged and traceable
-- ✅ **Tool isolation** - Domain restrictions enforced at MCP server level
-- ✅ **Scalable security** - MCP server can run with different security contexts
-- ✅ **Easy updates** - modify `sites_data.csv` to change knowledge scope
-- ✅ **Cost control** - limited search scope reduces API usage
+- **Process Separation**: Security policies isolated from main application
+- **Scalable Security**: MCP server can run with different security contexts
+- **Audit Trail**: MCP protocol provides clear tool usage logging
 
 
-## 🏢 Organizational Use Cases
+## 🏢 MCP for Enterprise Deployments
 
-### Internal Documentation Assistant
-- Employee onboarding guides and company handbooks
-- HR policy documentation and benefits information
-- Technical documentation and API references
-- Process and procedure manuals
-- **Intranet search solutions** - Direct search across internal sites
+The MCP architecture provides additional benefits for enterprise deployments:
 
-### Customer Support Knowledge Base
-- Product documentation and user guides
-- FAQ resources and troubleshooting guides
-- API documentation and developer resources
-- Release notes and changelog information
+### Enhanced Deployment Options
 
-### Enterprise Knowledge Management
-- **Departmental wikis** - Search across team-specific documentation
-- **Project documentation** - Access to project specs, requirements, and status updates
-- **Compliance and regulatory** - Search through policy documents and guidelines
-- **Training materials** - Access to learning resources and certification guides
+- **Distributed Architecture**: MCP server can run on separate machines for better resource utilization
+- **Microservices Compatibility**: Fits naturally into microservices architectures  
+- **Container Orchestration**: Better Docker/Kubernetes integration with separate service containers
+- **Load Balancing**: Multiple MCP server instances can be load balanced
 
-### Compliance and Safety
-- Regulatory documentation and compliance frameworks
-- Safety procedures and emergency protocols
-- Audit requirements and reporting guidelines
-- Legal documentation and contract templates
+### Enterprise Integration Benefits
 
-**Key Advantage**: All these use cases can be implemented with **simple search approaches** rather than complex RAG pipelines.
+- **Service Mesh Integration**: MCP server can participate in enterprise service mesh
+- **Centralized Tool Management**: Single MCP server can serve multiple client applications
+- **Resource Isolation**: Tool execution isolated from business logic
+- **Independent Scaling**: Scale search/scraping tools independently from API layer
 
-### Enterprise Search Integration: Elasticsearch Alternative
-
-For **internal documentation** where Tavily API access is limited, adapt the system to use **Elasticsearch**.
-
-**Enterprise Deployment Benefits:**
-- ✅ **Complete data control** - All searches stay within corporate network
-- ✅ **Security compliance** - No external API calls for sensitive documents
-- ✅ **Unified search** - Same agent interface for internal and external docs
-- ✅ **Permission integration** - Leverage existing Elasticsearch security
-- ✅ **Cost predictability** - No per-query API costs for internal searches
-
-**Migration Path**: Start with Tavily for public documentation, add Elasticsearch for internal content as needed.
+> **📋 For detailed organizational use cases** (internal documentation, customer support, compliance), see the [original project documentation](https://github.com/javiramos1/qagent#-organizational-use-cases).
 
 ## 🎯 Educational Goals
 
